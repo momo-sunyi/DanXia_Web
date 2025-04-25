@@ -1,41 +1,52 @@
 <template>
   <v-img
     class="fill-height"
-    src="../../../../assets/登录背景.png"
-    :aspect-ratio="16 / 9"
+    src="../../../../assets/新登录背景.png"
+    :aspect-ratio="16 / 8.4"
     height="100vh"
     width="100vw"
-    gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
   >
+    <!-- 添加黑色透明度40%的蒙版 -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6);"></div>
+
     <v-container fill-height fluid>
-      <v-row justify="center" align="center" class="fill-height">
+      <!-- 调整卡片位置，使其下移 -->
+      <v-row justify="center" align="center" class="fill-height" style="margin-top: 250px;">
         <v-col cols="12" md="8" lg="6" xl="4">
-          <v-card elevation="12" class="py-8">
+          <!-- 调整卡片样式与登录页面一致 -->
+          <v-card
+            elevation="12"
+            class="py-8"
+            style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(3px);"
+          >
             <v-card-text class="text-center">
-              <h2 class="text-h4 black--text font-weight-bold">确认退出登录</h2>
+              <!-- 修改标题字体颜色为白色，并强制生效 -->
+              <h2 class="text-h4 font-weight-bold" style="color: white !important;">确认退出登录</h2>
 
               <div class="mt-6">
                 <v-row justify="center">
                   <v-col cols="12" md="10">
                     <div class="mt-6">
+                      <!-- 修改确认按钮字体颜色为黑色 -->
                       <v-btn
                         block
                         class="text-capitalize"
-                         
-                        large 
+                        large
                         color="primary"
                         @click.stop="logout"
-                        >确认</v-btn>
-                      <p></p>
-                     
+                        style="border-radius: 20px; color: black !important;"
+                      >确认</v-btn>
+                      <!-- 增加按钮之间的间距 -->
+                      <p style="margin-top: 20px;"></p>
+                      <!-- 修改取消按钮字体颜色为黑色 -->
                       <v-btn
-                     
                         block
                         class="text-capitalize"
                         large
                         color="information"
                         @click="router.back()"
-                        >取消</v-btn>
+                        style="border-radius: 20px; color: black !important;"
+                      >取消</v-btn>
                     </div>
                   </v-col>
                 </v-row>
@@ -70,4 +81,4 @@ export default {
     };
   }
 };
-</script> 
+</script>

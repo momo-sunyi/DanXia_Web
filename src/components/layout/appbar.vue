@@ -28,14 +28,15 @@
       flat
       class="appbar"
       :clipped-left="lgAndUp"
-      color="primary"
+      color="transparent"
       dark
+      style="background-color: transparent; box-shadow: none; position: absolute; top: 0; left: 0; width: 100%; z-index: 998;"
     >
-      <v-container>
-        <v-row align="center" justify="space-between">
+      <v-container style="padding-top: 0;">
+        <v-row align="center" justify="space-between" style="margin-top: 0;">
           <v-col class="d-flex align-center">
             <v-toolbar-title
-              style="cursor: pointer"
+              style="cursor: pointer; margin-left: -10px;"  
               class="font-weight-bold text-h5"
               @click="$router.push('/front')"
             >
@@ -397,23 +398,26 @@ export default {
   border-bottom-right-radius: 20px;
 }
 
-/* 确保按钮文本颜色可见 */
+/* 为导航栏文字添加阴影 */
 .v-btn.text-capitalize {
   color: white !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* 添加阴影 */
 }
+
 .v-list-item-title {
   color: black !important;
 }
 
-/* 菜单按钮样式 - 减小字体大小 */
+/* 菜单按钮样式 - 增大字体大小 */
 .menu-btn {
   color: white !important;
   font-weight: 500;
-  font-size: 14px; /* 从16px减小到14px */
+  font-size: 16px; /* 从14px增大到18px */
   background-color: transparent;
   height: 48px !important;
   letter-spacing: 0.5px;
   text-transform: none;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* 添加阴影 */
 }
 
 /* 添加固定尺寸图标样式 */

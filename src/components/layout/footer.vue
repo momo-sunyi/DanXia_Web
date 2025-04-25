@@ -1,37 +1,46 @@
 <template>
   <div>
-    <v-footer color="primary" dark app absolute class="footer">
-      <v-container>
-        <v-row align="center">
-          <v-col cols="12" md="10" class="footer-section">
-            <h4 class="text-h5 font-weight-bold footer-title">华南农业大学</h4>
-            <p class="text-body-1 footer-links">
-              广东省广州市天河区五山路483号华南农业大学<br />
-              邮编： 510642<br />
-              微信公众号： 虚拟丹霞pro<br />
-            </p>
-          </v-col>
+    <v-footer color="primary" dark app absolute class="py-0 ma-0" height="auto" style="margin: 0; padding: 0;">
+      <v-container fluid class="pa-0">  <!-- 修改为 fluid 并移除所有内边距 -->
+        <v-row align="center" class="my-0">
+          <v-col cols="12" md="10" class="py-0">
+            <v-row align="center">
+              <!-- 添加图标 -->
+              <v-col cols="auto" style="padding-left: 130px !important; margin-top: 20px;">  
+                <v-img src="../../assets/图标.png" width="200" height="200"></v-img>
+              </v-col>
 
-          <v-col cols="12" md="2" class="footer-section">
-            <v-list flat color="transparent" class="historical-records-section">
-              <v-list-subheader class="text-h6 history-title">往年回顾</v-list-subheader>
-              <div class="video-buttons">
+              <!-- 地址信息靠左对齐 -->
+              <v-col class="text-left" style="padding-left: 100px !important;">  <!-- 使用内联样式强制生效 -->
+                <h4 class="text-h5 font-weight-bold mb-1" style="color: green !important; margin-bottom: 0 !important; margin-top: 30px !important;">华南农业大学</h4>  <!-- 上移 -->
+                <p class="text-caption" style="margin-top: 30px !important; font-size: 14px !important; line-height: 2.1;">  <!-- 增大字体和行间距 -->
+                  广东省广州市天河区五山路483号华南农业大学<br />
+                  邮编： 510642<br />
+                  微信公众号： 虚拟丹霞pro<br />
+                </p>
+              </v-col>
+            </v-row>
+          </v-col>
+         
+          <!-- 右侧往年回顾 -->
+          <v-col cols="12" md="2" class="footer-section" style="margin-left: -250px; margin-top: 60px;  margin-left: -300px !important ; flex-grow: 1; "> <!-- 添加 background-color: transparent -->
+            <v-list flat color="transparent" class="historical-records-section" style="background-color: rgba(255, 255, 255, 0.2); width: 350px !important; "> <!-- 设置背景为透明 -->
+              <v-list-subheader class="text-h6 history-title" style="color: green !important; border-bottom: 2px solid green; background-color: transparent;">往年回顾</v-list-subheader>
+              <div class="video-buttons d-flex" style="gap: 10px;">
                 <v-btn
-                  block
                   color="white"
                   variant="outlined"
                   prepend-icon="mdi-video"
-                  class="video-btn mb-3"
+                  class="video-btn"
                   @click="checkVideoFun"
                 >
                   <div class="btn-content">
                     <span class="btn-title">2021级生态学专业</span>
-                    <small>自然地理学野外综合实习</small>
+                    <small style="margin-left: 10px; margin-top: 5px;">自然地理学野外综合实习</small>
                   </div>
                 </v-btn>
                 
                 <v-btn
-                  block
                   color="white"
                   variant="outlined"
                   prepend-icon="mdi-video"
@@ -44,49 +53,11 @@
                   </div>
                 </v-btn>
               </div>
-
-              <!-- 外层的遮罩 v-if用来控制显示隐藏 点击事件用来关闭弹窗 -->
-              <div
-                class="mask"
-                v-if="videoState"
-                @click="masksCloseFun"
-              ></div>
-              <!-- 弹窗 -->
-              <div class="videomasks" v-if="videoState">
-                <!-- 视频：h5的视频播放video -->
-                <video
-                  :src="videoSrc"
-                  controls="controls"
-                  autoplay
-                  width="100%"
-                  height="100%"
-                >
-                  您的浏览器不支持 video 标签。
-                </video>
-              </div>
-              <div
-                class="mask"
-                v-if="videoState1"
-                @click="masksCloseFun1"
-              ></div>
-              <!-- 弹窗 -->
-              <div class="videomasks" v-if="videoState1">
-                <!-- 视频：h5的视频播放video -->
-                <video
-                  :src="videoSrc1"
-                  controls="controls"
-                  autoplay
-                  width="100%"
-                  height="100%"
-                >
-                  您的浏览器不支持 video 标签。
-                </video>
-              </div>
             </v-list>
           </v-col>
         </v-row>
 
-        <div class="text-center mt-6 footer-bottom">
+        <div class="text-center mt-6 footer-bottom" style="background-color: #006400; padding: 10px;">
           Copyright &copy;
           <a
             class="white--text"
@@ -97,8 +68,35 @@
           >
           {{ new Date().getFullYear() }}. All rights reserved.
         </div>
+        
       </v-container>
     </v-footer>
+    <template>
+      <div>
+        <!-- 视频播放模态框 -->
+        <v-dialog v-model="videoState" max-width="800" transition="dialog-bottom-transition">
+          <v-card style="background-color: rgba(255, 255, 255, 0.2);">
+            <v-card-text>
+              <video :src="videoSrc" controls autoplay style="width: 100%;"></video>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn color="white" @click="videoState = false" style="border-radius: 20px; background-color: rgba(0, 100, 0, 0.9);">关闭</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+    
+        <v-dialog v-model="videoState1" max-width="800" transition="dialog-bottom-transition">
+          <v-card style="background-color: rgba(255, 255, 255, 0.2);">
+            <v-card-text>
+              <video :src="videoSrc1" controls autoplay style="width: 100%;"></video>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn color="white" @click="videoState1 = false" style="border-radius: 20px; background-color: rgba(0, 100, 0, 0.9);">关闭</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -112,37 +110,21 @@ export default {
     const videoState = ref(false);
     const videoState1 = ref(false);
     
-    const cimsInputClick = () => {
-      window.location.href = "http://dxs.sg.gov.cn/";
-    };
-    
-    // 点击按钮出现弹窗播放视频
     const checkVideoFun = () => {
       videoState.value = true;
     };
-    
-    const masksCloseFun = () => {
-      videoState.value = false;
-    };
-    
+
     const checkVideoFun1 = () => {
       videoState1.value = true;
     };
-    
-    const masksCloseFun1 = () => {
-      videoState1.value = false;
-    };
-    
+
     return {
       videoSrc,
       videoSrc1,
       videoState,
       videoState1,
-      cimsInputClick,
       checkVideoFun,
-      masksCloseFun,
-      checkVideoFun1,
-      masksCloseFun1
+      checkVideoFun1
     };
   }
 };
@@ -194,6 +176,22 @@ export default {
 /* 视频按钮容器 */
 .video-buttons {
   padding: 5px 0;
+  white-space: nowrap; /* 禁止换行 */
+  width: 100%; /* 确保容器宽度 */
+}
+
+/* 视频按钮滚动动画 */
+@keyframes scrollButtons {
+  0% {
+    transform: translateX(10%); /* 从右侧开始 */
+  }
+  100% {
+    transform: translateX(-30%); /* 滚动到左侧 */
+  }
+}
+
+.video-buttons {
+  animation: scrollButtons 4s linear infinite; 
 }
 
 /* 视频按钮样式优化 */
@@ -208,6 +206,8 @@ export default {
   border: 1px solid white !important;
   color: white !important;
   background-color: rgba(255, 255, 255, 0.1) !important;
+  display: inline-block; /* 确保按钮水平排列 */
+  margin-right: 10px; /* 按钮间距 */
 }
 
 .video-btn .v-icon {
