@@ -21,7 +21,7 @@
           >
             <v-card-text class="text-center">
               <!-- 修改标题字体颜色为白色，并强制生效 -->
-              <h2 class="text-h4 font-weight-bold" style="color: white !important;">确认退出登录</h2>
+              <h2 class="text-h4 font-weight-bold" style="color: white !important; text-shadow: none;">确认退出登录</h2>
 
               <div class="mt-6">
                 <v-row justify="center">
@@ -34,7 +34,7 @@
                         large
                         color="primary"
                         @click.stop="logout"
-                        style="border-radius: 20px; color: black !important;"
+                        style="border-radius: 20px; color: black !important; text-shadow: none;"
                       >确认</v-btn>
                       <!-- 增加按钮之间的间距 -->
                       <p style="margin-top: 20px;"></p>
@@ -45,7 +45,7 @@
                         large
                         color="information"
                         @click="router.back()"
-                        style="border-radius: 20px; color: black !important;"
+                        style="border-radius: 20px; color: black !important; text-shadow: none;"
                       >取消</v-btn>
                     </div>
                   </v-col>
