@@ -131,7 +131,7 @@ const routes = [
         }
       },
       {
-        path: "/front/pages/learning/ClassIntro/:currentClass",
+        path: "/front/pages/learning/:currentClass",
         name: "ClassIntro",
         component: () => import("../views/front/pages/learning/ClassIntro.vue"),
         meta: {
@@ -140,15 +140,25 @@ const routes = [
       },
 
       {
-        path: "/front/pages/learning/Class/:currentClass",
-        name: "Class",
-        component: () => import("../views/front/pages/learning/Class.vue"),
-        meta: {
-          auth: true
-        }
-       
+        path: '/front/pages/learning/:currentClasss',
+        name: 'ClassList',
+        component: () => import('../views/front/pages/learning/ClassList.vue'),
+        props: true,
       },
 
+      {
+        path: "/front/pages/learning/:currentClass",
+        name: "ClassList",
+        component: () => import("../views/front/pages/learning/ClassList.vue"),
+        props: true,
+      },
+      {
+        path: "/front/pages/learning/:currentClass/:currentName",
+        name: "Class",
+        component: () => import("../views/front/pages/learning/Class.vue"),
+        props: true,
+      },
+       
       {
         path: "/front/pages/learning/FirstView",
         name: "FirstView",

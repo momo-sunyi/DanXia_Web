@@ -178,7 +178,7 @@ export default {
   name: "Class",
   setup() {
     const route = useRoute();
-
+    const currentClass = ref("自然地理");
     // 响应式状态
     const model = ref(1);
     const vname = ref("");

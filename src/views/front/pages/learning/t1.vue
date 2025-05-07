@@ -85,11 +85,11 @@ export default {
   name: "ClassIntro",
   setup() {
     const route = useRoute();
-
+    const currentClass = ref("自然地理");
     // 响应式状态
     const reveal = ref(false);
     const model = ref(0);
-    const currentClass = ref("");
+    
     const currentItem = ref([]);
     const InfoItem = reactive([
       {

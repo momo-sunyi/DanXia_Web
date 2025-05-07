@@ -146,7 +146,7 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
-    
+    const currentClass = ref("自然地理");
     const timeoutId = ref(null); // 计时器的 ID  
     const model = ref(1);
     const ztname = ref("");
@@ -156,7 +156,7 @@ export default {
     const ZTchild = ref([]);
     const pSrc = ref("");
     const PassPPtSrc = ref("");
-    const currentClass = ref("");
+    
     
     // 获取上一页面信息
     const PassClass = () => {

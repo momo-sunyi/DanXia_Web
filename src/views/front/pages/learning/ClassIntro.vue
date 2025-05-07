@@ -146,11 +146,11 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
-    
+    const currentClass = ref("自然地理"); // 设置默认值
     const isTeacher = ref(sessionStorage.getItem("isteacher") == "true" ? true : false);
     const reveal = ref(false);
     const model = ref(0);
-    const currentClass = ref("");
+    
     const currentItem = ref({});
     const InfoItem = reactive([]);
     

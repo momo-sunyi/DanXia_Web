@@ -2,7 +2,7 @@
   <div style="background-color: rgba(239, 247, 233, 0.891)">
     <video autoplay loop muted
       style="width: 100%; height: 100vh; object-fit: cover; position: absolute; top: 0; left: 0;">
-      <source src="/video/封面视频.mp4" type="video/mp4" />
+      <source src="/video/封面.mp4" type="video/mp4" />
       您的浏览器不支持视频标签。
     </video>
 

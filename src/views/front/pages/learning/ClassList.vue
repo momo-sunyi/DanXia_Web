@@ -139,7 +139,7 @@ export default {
     const model = ref(1);
     const videoitem = ref([]);
     const currentItem = ref([]);
-    const currentClass = ref("");
+    const currentClass = ref("自然地理"); // 设置默认值
     const parentName = ref("");
     const pptsrc = ref("");
     const v_src = ref("");
@@ -149,9 +149,15 @@ export default {
     const AllChapter = ref([]);
     const router = useRouter();
 
-    //获取上一页面信息
+    // 获取上一页面信息
+  
     const PassClass = () => {
       currentClass.value = router.currentRoute.value.params.currentClass;
+      // 检查 currentClass 是否存在
+      if (!currentClass.value) {
+        console.error("Missing required param 'currentClass'");
+        router.push({ name: "ErrorPage" }); // 跳转到错误页面或默认页面
+      }
     };
 
     //加载的目录
@@ -216,9 +222,12 @@ export default {
 
     //PPT点击跳转事件
     const routeto = (event) => {
-      //先获取当前点击事件的name，查找相应psrc地址
+      if (!event || !event.currentTarget) {
+        console.error("Invalid event or target element");
+        return;
+      }
       const currentName = event.currentTarget.innerText;
-
+    
       for (let i = 0; i < AllChapter.value.length; i++) {
         for (let j = 0; j < AllChapter.value[i].info.length; j++)
           if (currentName == AllChapter.value[i].info[j].topic) {
@@ -231,6 +240,10 @@ export default {
             };
           }
       }
+      if (!currentClass.value) {
+        console.error("Missing required param 'currentClass'");
+        return;
+      }
       router.push({
         name: 'Class',
         params: {
@@ -242,17 +255,25 @@ export default {
         },
       });
     };
-
-    //视频跳转页面
+    
+    // 视频跳转页面
     const videoto = (event) => {
+      if (!event || !event.currentTarget) {
+        console.error("Invalid event or target element");
+        return;
+      }
       const v_name = event.currentTarget.innerText;
-      // console.log(v_name);
-      // console.log(this.videoitem);
+      //console.log(v_name);
+      //console.log(this.videoitem);
       for (let b = 0; b < videoitem.value.length; b++) {
         const vit = videoitem.value[b];
         if (v_name == vit.title) {
           v_src.value = vit.video;
         }
+      }
+      if (!currentClass.value) {
+        console.error("Missing required param 'currentClass'");
+        return;
       }
       router.push({
         name: "video",
@@ -273,6 +294,7 @@ export default {
       loadClassList();
       // this.loadList();
     });
+
 
     const filteredSubject = computed(() => {
       // 使用this.currentClass来过滤Subject数组
