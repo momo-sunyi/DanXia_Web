@@ -1,142 +1,120 @@
-<template  >
-  <v-app class="green lighten-5">
+<template>
+  <v-app style="background-color: #C8E6C9;"> <!-- 修改为绿色背景 -->
     <v-container fluid>
-      <v-row>
-        <v-card class="pull-left ml-5 mt-5" height="500px" min-width="11%">
-          <v-list>
-            <v-list-item-group v-model="model" >
-              <router-link
-                :to="{
-                  name: 'ClassIntro',
-                  params: { currentClass: currentClass },
-                }"
-                class="text-decoration-none"
-              >
-                <v-list-item link>
-                  <v-list-item-icon>
-                    <v-icon>mdi-pen</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title>课程介绍</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </router-link>
-              <router-link
-                :to="{
-                  name: 'ClassList',
-                  params: { currentClass: this.currentClass },
-                }"
-                class="text-decoration-none"
-              >
-                <v-list-item link>
-                  <v-list-item-icon>
-                    <v-icon>mdi-book</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title>课程内容</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </router-link>
-              <!-- <router-link
-                to="/front/pages/learning/DisscusList"
-                class="text-decoration-none"
-              >
-              <v-list-item  link>
-                <v-list-item-icon>
-                  <v-icon>mdi-message</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>讨论区</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item> 
-              </router-link> -->
-            </v-list-item-group>
-          </v-list>
-        </v-card>
+      <!-- 顶部标签页导航 -->
+      <div class="tab-container">
+        <router-link :to="{ name: 'ClassIntro', params: { currentClass: currentClass } }" class="tab-item"
+          :class="{ 'active': model === 0 }" @click="model = 0">
+          <v-icon left>mdi-pen</v-icon>
+          课程介绍
+        </router-link>
+        <router-link :to="{ name: 'ClassList', params: { currentClass: currentClass } }" class="tab-item"
+          :class="{ 'active': model === 1 }" @click="model = 1">
+          <v-icon left>mdi-book</v-icon>
+          课程内容
+        </router-link>
+        <div class="tab-slider" :style="sliderStyle"></div>
+      </div>
 
-        <div id="r">
-          <v-card class="mx-auto" min-height="100%" min-width="100%">
-            <v-card-text>
-              <p id="pi" class="ml-5 mt-5 text-h6 font-weight-bold">
-                课程名称 :
-              </p>
+      <!-- 修改容器样式 -->
+      <v-container fluid style="padding: 0 0%;"> <!-- 添加左右padding控制 -->
+        <!-- ... 顶部导航保持不变 ... -->
 
-              <p id="pi" class="ml-7 body-1">{{ currentItem.title }}</p>
-              <v-btn
-                outlined
-                color="green lighten-1"
-                absolute
-                right
-                @click="goBack"
-                title="返回"
-              >
-                <v-icon>mdi-arrow-left</v-icon>
-              </v-btn>
-              <br /> <p id="pi" class="ml-5  text-h6 font-weight-bold">
-                任课老师 :
-              </p>
+        <!-- 修改主内容区域 -->
+        <v-container fluid style="padding: 0px 50px 0 12px;"> <!-- 添加适当padding -->
+          <!-- 顶部标签页导航保持不变... -->
 
-              <p id="pi" class="ml-7 body-1">{{ currentItem.teacher }}</p>
+          <!-- 主内容区域 -->
+          <div id="r">
+            <v-card class="mx-auto" min-height="100%" width="100%" flat>
+              <v-card-text class="content-card">
+                <!-- 课程信息区域 -->
+                <!-- 在课程信息区域下方添加导航栏 -->
+                <div class="info-image-container">
+                  <div class="info-block" style="padding-top:-15px; ">
+                    <p class="text-h4 font-weight-bold" style="margin-left: -10px;">{{ currentItem.title }}</p>
+                    <p class="text-h5 mt-3" style="margin-left: -10px;">{{ currentItem.teacher }}</p>
+                    <!-- 修改课程性质区域 -->
+                    <div class="course-property mt-4" style="margin-left: -25px;"> <!-- 增加左移距离 -->
+                      <p class="text-h6 font-weight-bold mb-2">课程性质：</p>
+                      <v-textarea v-if="isTeacher" v-model="currentItem.xingzhi" @change="updateIntro" auto-grow
+                        class="custom-textarea" style="font-size: 16px;"></v-textarea>
 
-              
-              <p class="ml-5 text-h6 font-weight-bold">课程性质 ：</p>
-              <v-textarea
-                class="ml-5"
-                v-if="isTeacher"
-                v-model="currentItem.xingzhi"
-                @change="updateIntro"
-                auto-grow
-                style="font-family: '楷体', sans-serif; font-size: 18px;" 
-              ></v-textarea>
-              <p class="mx-8" style="white-space: pre-wrap" v-if="!isTeacher">
-                {{ currentItem.xingzhi }}
-              </p>
-              <p class="ml-5 text-h6 font-weight-bold">课程目的与要求 ：</p>
-              <v-textarea
-                class="ml-5"
-                v-if="isTeacher"
-                v-model="currentItem.aim"
-                @change="updateIntro"
-                auto-grow
-                style="font-family: '楷体', sans-serif; font-size: 18px;" 
-              ></v-textarea>
-              <p class="mx-8" style="white-space: pre-wrap" v-if="!isTeacher">
-                {{ currentItem.aim }}
-              </p>
-              <p class="ml-5 text-h6 font-weight-bold">教学重点与难点 ：</p>
-              <v-textarea
-                class="ml-5"
-                v-if="isTeacher"
-                v-model="currentItem.difficult"
-                @change="updateIntro"
-                auto-grow
-                style="font-family: '楷体', sans-serif; font-size: 18px;" 
-              ></v-textarea>
-              <p class="mx-8" style="white-space: pre-wrap" v-if="!isTeacher">
-                {{ currentItem.difficult }}
-              </p>
-              <p class="ml-5 text-h6 font-weight-bold">教学内容 ：</p>
-              <v-textarea
-                class="ml-5"
-                v-if="isTeacher"
-                v-model="currentItem.content"
-                @change="updateIntro"
-                auto-grow
-                style="font-family: '楷体', sans-serif; font-size: 18px;" 
-              ></v-textarea>
-              <p class="mx-8" style="white-space: pre-wrap" v-if="!isTeacher">
-                {{ currentItem.content }}
-              </p>
-            </v-card-text>
-          </v-card>
-        </div>
-      </v-row>
+                      <p v-else class="course-property-content" style="font-size: 13px;">
+                        {{ currentItem.xingzhi }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <v-btn class="back-button" @click="goBack" icon color="primary">
+                    <v-icon>mdi-arrow-left</v-icon>
+                  </v-btn>
+
+                  <!-- 修改图片容器样式 -->
+                  <v-img :src="courseImage" contain max-height="300" class="course-image"
+                    style="max-width: 35%; margin-top: 105px;"></v-img>
+                </div>
+
+                <!-- 添加导航栏 -->
+                <div class="content-nav">
+                  <v-btn text @click="activeTab = 'aim'" :class="{ 'active-tab': activeTab === 'aim' }">
+                    课程目的与要求
+                  </v-btn>
+                  <v-btn text @click="activeTab = 'difficult'" :class="{ 'active-tab': activeTab === 'difficult' }">
+                    教学重点与难点
+                  </v-btn>
+                  <v-btn text @click="activeTab = 'content'" :class="{ 'active-tab': activeTab === 'content' }">
+                    教学内容
+                  </v-btn>
+                </div>
+
+                <!-- 条件渲染的内容区域保持不变 -->
+                <template v-if="activeTab === 'aim'">
+                <div class="content-block" :class="{ 'active-content': activeTab === 'aim' }">
+                <p class="ml-5 text-h6 font-weight-bold">课程目的与要求 ：</p>
+                <v-textarea class="ml-5" v-if="isTeacher" v-model="currentItem.aim" @change="updateIntro" auto-grow
+                  style="font-family: '楷体', sans-serif; font-size: 18px;"></v-textarea>
+                <p class="mx-8" style="white-space: pre-wrap" v-if="!isTeacher">
+                  {{ currentItem.aim }}
+                </p>
+              </div>
+              </template>
+
+              <template v-if="activeTab === 'difficult'">
+                <div class="content-block" :class="{ 'active-content': activeTab === 'difficult' }">
+                <p class="ml-5 text-h6 font-weight-bold">教学重点与难点 ：</p>
+                <v-textarea class="ml-5" v-if="isTeacher" v-model="currentItem.difficult" @change="updateIntro"
+                  auto-grow style="font-family: '楷体', sans-serif; font-size: 18px;"></v-textarea>
+                <p class="mx-8" style="white-space: pre-wrap" v-if="!isTeacher">
+                  {{ currentItem.difficult }}
+                </p>
+              </div>
+              </template>
+
+              <template v-if="activeTab === 'content'">
+                <div class="content-block" :class="{ 'active-content': activeTab === 'content' }">
+                <p class="ml-5 text-h6 font-weight-bold">教学内容 ：</p>
+                <v-textarea class="ml-5" v-if="isTeacher" v-model="currentItem.content" @change="updateIntro"
+                  auto-grow></v-textarea>
+                <p class="mx-8" style="white-space: pre-wrap" v-if="!isTeacher">
+                  {{ currentItem.content }}
+                </p>
+              </div>
+              </template>
+              </v-card-text>
+            </v-card>
+          </div>
+        </v-container>
+      </v-container>
     </v-container>
+
   </v-app>
 </template>
 
+
+
 <script>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from "axios";
 
@@ -179,6 +157,8 @@ export default {
       });
     };
     
+    const activeTab = ref('aim'); 
+
     const CurrentItem = () => {
       axios({
         url: "https://danxiagis.top:8081/teacher/courseIntro/get",
@@ -209,6 +189,26 @@ export default {
       CurrentItem();
     });
     
+    const sliderStyle = computed(() => {
+      const tabWidth = 100 / 2; // 两个标签平分宽度
+      return {
+        width: `${tabWidth}%`,
+        transform: `translateX(${model.value * 100}%)`
+      };
+    });
+
+    const courseImages = {
+      "自然地理": require('@/assets/自然地理.png'),
+      "人文与经济地理": require('@/assets/人文地理.png'),
+      "地图学": require('@/assets/地图学.png'),
+      "地理信息系统原理": require('@/assets/地理信息系统.png'),
+      // 添加更多课程图片映射
+    };
+
+    const courseImage = computed(() => {
+      return courseImages[currentClass.value] || require('@/assets/丹霞山1.png');
+    });
+
     return {
       isTeacher,
       reveal,
@@ -219,23 +219,230 @@ export default {
       updateIntro,
       goBack,
       CurrentItem,
-      PassClass
+      PassClass,
+      sliderStyle,
+      courseImage,  // 确保这里返回了courseImage
+      activeTab
+      
     };
   }
 };
 </script>
+
 <style>
+.tab-container {
+  position: relative;
+  display: flex;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 20px;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 12px 16px;
+  position: relative;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.tab-item.active {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.tab-slider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: #4CAF50;
+  border-radius: 3px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+
+
+/* 移除主内容区域阴影 */
 #r {
   min-height: 900px;
-  width: 80%;
+  margin: 0 auto 40px;
+  width: 100%;
+  padding: 0;
+
+  min-width: 100%;
   position: relative;
-  box-shadow: 0px 0px 3px rgb(160, 157, 157);
-  left: 20px;
-  top: 20px;
   margin-bottom: 40px;
-  border-radius: 3%;
+  border-radius: 0;
+  box-shadow: none !important; /* 移除阴影 */
 }
-#pi {
-  display: inline-block;
+
+/* 移除课程性质区域的阴影 */
+.course-property {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 15px;
+  border-radius: 0; /* 移除圆角 */
+  box-shadow: none !important; /* 移除阴影 */
 }
+
+/* 移除图片阴影 */
+.course-image {
+  flex: 1;
+  max-width: 40%;
+  border-radius: 0;
+  box-shadow: none !important; /* 移除阴影 */
+  border: none !important; /* 移除边框 */
+}
+
+.info-image-container {
+  display: flex;
+  align-items: stretch;
+  margin: 20px 0;
+}
+
+.info-block {
+  flex: 1;
+  background: #e8f5e9; /* 浅绿色背景 */
+  padding: 30px;
+  border-radius: 8px 0 0 8px;
+}
+
+.course-image {
+  flex: 1;
+  max-width: 40%;
+  border-radius: 0 8px 8px 0;
+}
+
+/* 修改课程性质区域样式 */
+.course-property {
+  background: rgba(0,0,0,0.05) !important; /* 浅灰色蒙版 */
+  padding: 18px;
+  border-radius: 4px;
+  box-shadow: none !important;
+}
+
+.course-property-content {
+  background: rgba(255,255,255,0.8) !important; /* 白色半透明背景 */
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.custom-textarea {
+  background: rgba(58, 44, 44, 0.8) !important; /* 白色半透明背景 */
+}
+
+.course-property-content {
+  font-family: inherit !important; /* 使用系统字体 */
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  margin-top: 8px;
+}
+
+/* 添加全局字体设置 */
+body, .v-application {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* 修改卡片样式 */
+.content-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-radius: 0 !important;
+  padding: 24px;
+}
+
+/* 调整信息块背景色 */
+.info-block {
+  background: rgba(255, 255, 255, 0.5) !important;
+  padding: 20px 30px; /* 调整padding */
+  border-radius: 0;
+}
+
+/* 修改文本区域字体 */
+.custom-textarea {
+  font-family: inherit !important; /* 使用系统字体 */
+  font-size: 16px;
+  background: #fff;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.course-property-content {
+  font-family: inherit !important; /* 使用系统字体 */
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  margin-top: 8px;
+}
+
+.back-button {
+  position: absolute;
+  right: 20px;
+  top:90px;
+  transform: translateY(-50%);
+}
+
+/* 调整主内容区域样式 */
+#r {
+  min-height: 900px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 确保所有元素使用border-box模型 */
+* {
+  box-sizing: border-box;
+}
+
+.content-nav {
+  display: flex;
+  margin: 20px 0;
+  padding: 0;
+  border: none;
+}
+
+.content-nav .v-btn {
+  margin-right: 15px;
+  text-transform: none;
+  font-size: 16px;
+}
+
+.content-nav .active-tab {
+  color: #4CAF50;
+  font-weight: bold;
+  border-bottom: 2px solid #4CAF50;
+}
+
+.content-nav .nav-btn {
+  flex: 1;
+  margin: 0;
+  border-radius: 0;
+  border-right: 1px solid #e0e0e0;
+}
+
+.content-nav .nav-btn:last-child {
+  border-right: none;
+}
+
+.content-nav .active-tab {
+  background-color: #4CAF50;
+  color: white !important;
+}
+
+/* 添加内容区域样式 */
+.content-block {
+  padding: 15px;
+  border-radius: 0 0 4px 4px;
+}
+
+.active-content {
+  background-color: rgba(76, 175, 80, 0.1);
+  border-left: 3px solid #4CAF50;
+}
+
 </style>

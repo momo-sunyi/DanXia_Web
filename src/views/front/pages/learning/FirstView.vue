@@ -28,7 +28,9 @@
                     <v-row class="fill-height" align="center" justify="center">
                       <v-icon :color="card.iconColor" size="70">{{ card.icon }}</v-icon>
                     </v-row>
-                    <v-text id="text1">{{ card.title }}</v-text>
+                    <!-- 修改前：<v-text id="text1">{{ card.title }}</v-text> -->
+                    <!-- 修改后： -->
+                    <div id="text1">{{ card.title }}</div>
                   </v-col>
                 </v-card>
               </v-hover>

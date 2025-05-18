@@ -211,18 +211,22 @@ export default {
 
     // 方法
     const PassClass = () => {
-      const currentClass = route.params.currentClass;
-      // console.log(111+ currentClass)
+      const route = useRoute();
+      currentClass.value = route.params.currentClass || "自然地理";
+      if (!currentClass.value) {
+      console.error("Missing required param 'currentClass'");
+      }
     };
 
     const PassSrc = () => {
+      const route = useRoute();
       const src = route.params.v_src;
       const v_name = route.params.v_name;
       const pic = route.params.v_pic;
-      vname.value = v_name;
+
       videoSrc.value = src;
+      vname.value = v_name;
       playerOptions.sources[0].src = videoSrc.value;
-      // console.log("1"+vname.value)
     };
 
     const loadVideo = () => {
@@ -235,7 +239,7 @@ export default {
           const resInfo = res[i].info;
           // 调试用视频
           if (res[i]._id === '视频') {
-            for (let a = 0; a < resInfo.length; a++) {
+            for (var a = 0; a < resInfo.length; a++) {
               const vitem = {
                 pic: resInfo[a].picture,
                 vsrc: resInfo[a].video,
@@ -252,7 +256,7 @@ export default {
     // 图片点击选择事件
     const nextvideo = (text) => {
       // console.log(text);
-      for (let i = 0; i < videoList.value.length; i++) {
+      for (var i = 0; i < videoList.value.length; i++) {
         if (text === videoList.value[i].text) {
           vsrc.value = videoList.value[i].vsrc;
         }
@@ -265,7 +269,7 @@ export default {
     // selection点击选择
     const selectVideo = (event) => {
       // console.log(event);
-      for (let i = 0; i < videoList.value.length; i++) {
+      for (var i = 0; i < videoList.value.length; i++) {
         if (event === videoList.value[i].text) {
           vsrc.value = videoList.value[i].vsrc;
         }
@@ -296,6 +300,8 @@ export default {
     };
   }
 };
+
+
 </script>
 <style>
 #r {

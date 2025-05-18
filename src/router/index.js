@@ -196,6 +196,54 @@ const routes = [
        
       },
       {
+        path: "/front/pages/learning/ClassList",
+        name: 'ClassList',
+        component: () => import('../views/front/pages/learning/ClassList.vue')
+      },
+      {
+        path: "/front/pages/learning/:currentClass/:currentName",
+        name: "Class",
+        component: () => import("../views/front/pages/learning/Class.vue"),
+        props: true,
+      },
+       
+      {
+        path: "/front/pages/learning/FirstView",
+        name: "FirstView",
+        component: () => import("../views/front/pages/learning/FirstView.vue"),
+        meta: {
+          auth: true
+        }
+       
+      },
+      {
+        path: "/front/pages/learning/video",
+        name: "video",
+        component: () => import("../views/front/pages/learning/video.vue"),
+        meta: {
+          auth: true
+        }
+       
+      },
+      {
+        path: "/front/pages/learning/Disscus",
+        name: "Disscus",
+        component: () => import("../views/front/pages/learning/Disscus.vue"),
+        meta: {
+          auth: true
+        }
+       
+      },
+      {
+        path: "/front/pages/learning/DisscusList",
+        name: "DisscusList",
+        component: () => import("../views/front/pages/learning/DisscusList.vue"),
+        meta: {
+          auth: true
+        }
+       
+      },
+      {
         path: "/front/pages/learning/ClassList/:currentClass",
         name: "ClassList",
         component: () => import("../views/front/pages/learning/ClassList.vue"),
