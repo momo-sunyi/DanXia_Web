@@ -1,17 +1,11 @@
 <template>
-  <v-app style="background-color: #C8E6C9;">
+  <v-app style="background-color: #C8E6C9; position: relative;">
+    <!-- 移除返回按钮代码 -->
+
     <v-container fluid>
       <!-- 顶部标签页导航 -->
       <div class="tab-container">
-        <v-btn 
-          @click="$router.push({ name: 'FirstView' })" 
-          icon
-          class="back-button"
-          color="primary"
-          style="position: absolute; right: 80px; top: 196px;"
-        >
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
+        <!-- 移除原来的返回按钮代码 -->
         <router-link 
           :to="{ name: 'ClassIntro', params: { currentClass: currentClass } }" 
           class="tab-item"
@@ -241,18 +235,11 @@ export default {
 </script>
 
 <style>
-/* 修改返回按钮样式 */
-.back-button {
-  position: absolute;
-  right: 20px;  /* 距离右侧20px */
-  top: 20px;    /* 距离顶部20px */
-  z-index: 3;
-}
+/* 移除返回按钮样式 */
 
 /* 调整标签容器位置 */
 .tab-container {
   position: relative;
-  padding-right: 60px; /* 为右侧按钮留出空间 */
   display: flex;
   background: #f5f5f5;
   border-radius: 8px;

@@ -32,7 +32,21 @@
                 <!-- 在课程信息区域下方添加导航栏 -->
                 <div class="info-image-container">
                   <div class="info-block" style="padding-top:-15px; ">
-                    <p class="text-h4 font-weight-bold" style="margin-left: -10px;">{{ currentItem.title }}</p>
+                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                      <p class="text-h4 font-weight-bold" style="margin-left: -10px;">{{ currentItem.title }}</p>
+                      <v-btn 
+                        v-if="currentItem.title"
+                        @click="openMoocLink(currentItem.title)"
+                        color="primary"
+                        class="ml-2"
+                        small
+                        outlined
+                        style="margin-right:170px;"  
+                      >
+                        <v-icon left small>mdi-open-in-new</v-icon>
+                        点击进入中国MOOC学习
+                      </v-btn>
+                    </div>
                     <p class="text-h5 mt-3" style="margin-left: -10px;">{{ currentItem.teacher }}</p>
                     <!-- 修改课程性质区域 -->
                     <div class="course-property mt-4" style="margin-left: -25px;"> <!-- 增加左移距离 -->
@@ -209,6 +223,22 @@ export default {
       return courseImages[currentClass.value] || require('@/assets/丹霞山1.png');
     });
 
+    const openExternalLink = (url) => {
+      window.open(url, '_blank');
+    };
+
+    const moocLinks = {
+          "自然地理": "https://www.icourse163.org/search.htm?search=%E8%87%AA%E7%84%B6%E5%9C%B0%E7%90%86#/",
+          "人文与经济地理": "https://www.icourse163.org/search.htm?search=%E4%BA%BA%E6%96%87%E5%9C%B0%E7%90%86#/",
+          "地图学": "https://www.icourse163.org/search.htm?search=%E5%9C%B0%E5%9B%BE%E5%AD%A6#/",
+          "地理信息系统原理": "https://www.icourse163.org/search.htm?search=%E5%9C%B0%E7%90%86%E4%BF%A1%E6%81%AF%E7%B3%BB%E7%BB%9F#/"
+        };
+    
+        const openMoocLink = (courseName) => {
+          const url = moocLinks[courseName] || "https://www.icourse163.org/";
+          window.open(url, '_blank');
+        };
+    
     return {
       isTeacher,
       reveal,
@@ -221,9 +251,10 @@ export default {
       CurrentItem,
       PassClass,
       sliderStyle,
-      courseImage,  // 确保这里返回了courseImage
-      activeTab
-      
+      courseImage,
+      activeTab,
+      openExternalLink,
+      openMoocLink // 确保这个方法被返回
     };
   }
 };
